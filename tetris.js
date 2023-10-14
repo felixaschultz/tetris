@@ -104,7 +104,7 @@ class Tetris {
 
     /* Draw */
     draw() {
-        this.context.fillStyle = '#000';
+        this.context.fillStyle = 'rgb(63, 63, 63)';
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawMatrix(this.player.matrix, this.player.pos);
     }
@@ -132,6 +132,10 @@ class Tetris {
             }
 
             if(this.player.pos.y === this.canvas.height / 10 - 1){
+                const currentMatrix = this.player.matrix;
+                const currentMatrixArray = localStorage.getItem('tetris') === null ? [] : JSON.parse(localStorage.getItem('tetris'));
+                currentMatrixArray.push(currentMatrix);
+                localStorage.setItem('tetris', JSON.stringify(currentMatrixArray));
                 this.player.matrix = this.createPiece(this.types[Math.floor(Math.random() * this.types.length)]);
                 this.player.pos.x = 10;
                 this.player.pos.y = 0;
@@ -139,10 +143,8 @@ class Tetris {
             }
         }
 
-        /* Up */
-        /* if (event.keyCode === 81) {
-            this.player.pos.y--;
-        } */
+        /* Keep tetris piece at the bottom */
+        this.keepTetrisBlocksAtTheBottomOfCanvas();
 
     }
 
@@ -151,6 +153,19 @@ class Tetris {
         this.draw();
         requestAnimationFrame(() => this.run());
     }
+
+    /* Keep Tetris blocks at the bottom of canvas */
+    keepTetrisBlocksAtTheBottomOfCanvas() {
+        JSON.parse(localStorage.getItem('tetris')).forEach((row, y) => {
+            row.forEach((value, x) => {
+                if (value !== 0) {
+                    this.context.fillStyle = "#FF0000";
+                    this.context.fillRect(x + this.player.pos.x, y + this.player.pos.y, 1, 1);
+                }
+            });
+        })
+    }
+
 
     /* Start */
     start() {
