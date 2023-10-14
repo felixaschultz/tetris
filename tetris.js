@@ -5,9 +5,16 @@ class Tetris {
         this.context = this.canvas.getContext('2d');
         this.context.scale(10, 10);
         this.types = ['T', 'O', 'L', 'J', 'I', 'S', 'Z'];
+        this.colors = [
+            '#FF0000',
+            '#00FF00',
+            '#0000FF',
+            '#FFFF00',
+            '#00FFFF',
+        ];
         this.player = {
             pos: {
-                x: 0,
+                x: 10,
                 y: 0
             },
             matrix: this.createPiece(this.types[Math.floor(Math.random() * this.types.length)])
@@ -88,7 +95,7 @@ class Tetris {
         matrix.forEach((row, y) => {
             row.forEach((value, x) => {
                 if (value !== 0) {
-                    this.context.fillStyle = 'red';
+                    this.context.fillStyle = "#FF0000";
                     this.context.fillRect(x + offset.x, y + offset.y, 1, 1);
                 }
             });
@@ -113,27 +120,25 @@ class Tetris {
         
         /* Right */
         if (event.keyCode === 39) {
-            if(this.player.pos.x < this.canvas.width / 10 - 1){
+            if(this.player.pos.x < this.canvas.width  / 10 - 3){
                 this.player.pos.x++;
             }
         }
         
         /* Down */
         if (event.keyCode === 40) {
-            if(this.player.pos.y < this.canvas.height / 10 - 1){
+            if(this.player.pos.y / 10 - 1 < this.canvas.height){
                 this.player.pos.y++;
             }
 
             if(this.player.pos.y === this.canvas.height / 10 - 1){
                 this.player.matrix = this.createPiece(this.types[Math.floor(Math.random() * this.types.length)]);
-                this.player.pos.x = 0;
+                this.player.pos.x = 10;
                 this.player.pos.y = 0;
-                /* this.drawMatrix(this.player.matrix, this.player.pos); */
                 this.run();
-
             }
         }
-        
+
         /* Up */
         /* if (event.keyCode === 81) {
             this.player.pos.y--;
