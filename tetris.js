@@ -150,7 +150,7 @@ class Tetris {
         }
 
         if(event.keyCode === 38){
-            this.player.pos.y--;
+            this.rotate();
         }
 
         if(event.keyCode === 37){
@@ -185,6 +185,14 @@ class Tetris {
         this.update();
         this.draw();
         requestAnimationFrame(() => this.run());
+    }
+
+    /* Rotate */
+    rotate(){
+        const matrix = this.player.matrix;
+        const N = matrix.length - 1;
+        const result = matrix.map((row, i) => row.map((val, j) => matrix[N - j][i]));
+        this.player.matrix = result;
     }
 
     /* Save */
