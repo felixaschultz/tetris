@@ -102,30 +102,43 @@ class Tetris {
     }
 
     /* Update */
-    update() {
-        document.addEventListener('keydown', event => {
-            if (event.keyCode === 37) {
+    update(event) {
+        /* Left */
+        if (event.keyCode === 37) {
+            if(this.player.pos.x > 0){
                 this.player.pos.x--;
             }
-    
-            if (event.keyCode === 39) {
+        }
+        
+        /* Right */
+        if (event.keyCode === 39) {
+            if(this.player.pos.x < this.canvas.width / 10 - 1){
                 this.player.pos.x++;
             }
-    
-            if (event.keyCode === 40) {
+        }
+        
+        /* Down */
+        if (event.keyCode === 40) {
+            if(this.player.pos.y < this.canvas.height / 10 - 1){
                 this.player.pos.y++;
             }
-    
-            if (event.keyCode === 81) {
-                this.player.pos.y--;
+
+            console.log(this.player.pos.y, this.canvas.height);
+
+            if(this.player.pos.y === this.canvas.height / 10 - 1){
+                console.log('Game Over');
             }
-        });
+        }
+        
+        /* Up */
+        /* if (event.keyCode === 81) {
+            this.player.pos.y--;
+        } */
 
     }
 
     /* Run */
     run() {
-        this.update();
         this.draw();
         requestAnimationFrame(() => this.run());
     }
@@ -139,3 +152,7 @@ class Tetris {
 /* Init */
 const tetris = new Tetris();
 tetris.start();
+
+document.addEventListener('keydown', event => {
+    tetris.update(event);
+});

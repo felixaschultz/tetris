@@ -6,6 +6,10 @@ body{
     margin: 0;
     padding: 0;
     background-color: rgb(33, 33, 33);
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    overflow: hidden;
 }
 
 canvas{
