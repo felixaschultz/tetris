@@ -4,12 +4,13 @@ class Tetris {
         this.canvas = document.getElementById('tetris');
         this.context = this.canvas.getContext('2d');
         this.context.scale(10, 10);
+        this.types = ['T', 'O', 'L', 'J', 'I', 'S', 'Z'];
         this.player = {
             pos: {
                 x: 0,
                 y: 0
             },
-            matrix: this.createPiece('S')
+            matrix: this.createPiece(this.types[Math.floor(Math.random() * this.types.length)])
         };
 
     }
@@ -123,10 +124,13 @@ class Tetris {
                 this.player.pos.y++;
             }
 
-            console.log(this.player.pos.y, this.canvas.height);
-
             if(this.player.pos.y === this.canvas.height / 10 - 1){
-                console.log('Game Over');
+                this.player.matrix = this.createPiece(this.types[Math.floor(Math.random() * this.types.length)]);
+                this.player.pos.x = 0;
+                this.player.pos.y = 0;
+                /* this.drawMatrix(this.player.matrix, this.player.pos); */
+                this.run();
+
             }
         }
         
